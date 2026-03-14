@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8">
+    <title>RefStream — Authentification</title>
+    <style>
+      body { font-family: sans-serif; text-align: center; padding: 3em; background: #111; color: #eee; }
+      h2   { color: #1db954; }
+      p    { color: #aaa; }
+    </style>
+  </head>
+  <body>
+    <h2>RefStream</h2>
+    <p>Authentification en cours, vous pouvez fermer cet onglet...</p>
+    <script>
+      var params = new URLSearchParams(window.location.search);
+      var state  = params.get('state') || '';
+      var match  = state.match(/^PORT(\d+)-/);
+      var port   = match ? match[1] : '8080';
+      var dest   = 'http://127.0.0.1:' + port + '/callback' + window.location.search;
+      window.location.replace(dest);
+    </script>
+  </body>
+</html>
