@@ -13,11 +13,16 @@
     <h2>RefStream</h2>
     <p>Authentification en cours, vous pouvez fermer cet onglet...</p>
     <script>
-      var params = new URLSearchParams(window.location.search);
+      // Query params (?code=...) — standard Authorization Code flow
+      var search = window.location.search;
+      // Some providers put params in hash fragment (#code=...) — handle that too
+      if (!search && window.location.hash)
+        search = '?' + window.location.hash.substring(1);
+      var params = new URLSearchParams(search);
       var state  = params.get('state') || '';
       var match  = state.match(/^PORT(\d+)-/);
       var port   = match ? match[1] : '8080';
-      var dest   = 'http://127.0.0.1:' + port + '/callback' + window.location.search;
+      var dest   = 'http://127.0.0.1:' + port + '/callback' + search;
       window.location.replace(dest);
     </script>
   </body>
